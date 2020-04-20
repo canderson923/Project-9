@@ -1,0 +1,114 @@
+
+class SquareGame {
+   field Square square; // the square of this game
+   field int direction; // the square's current direction: 
+                        // 0=none, 1=up, 2=down, 3=left, 4=right
+	
+   field Bullet bullet;
+   field boolean fired;
+   field int currentY;
+   field int currentX;
+   field int bp;
+   field int padding;
+   
+   // Blocks
+   field Block block;
+   field Block block2;
+   field Block block3;
+   field Block block4;
+   field Block block5;
+   field Block block6;
+   field Block block7;
+   field Block block8;
+   field Block block9;
+   field Block block10;
+   field Block block11;
+   field Block block12;
+   field Block block13;
+   /** Constructs a new Square Game. */
+   constructor SquareGame new() {
+	  let padding = 10;
+      let square = Square.new(240, 230, 30);
+	  let bullet = Bullet.new(square.xPos() + (square.sSize()/2), square.yPos()-6,4);
+	  do bullet.erase();
+	  let bp = 80;
+	  let block = Block.new(30, 50, 30);
+	  let block2 = Block.new(65, 50, 30);
+	  let block3 = Block.new(100, 50, 30);
+	  let block4 = Block.new(135, 50, 30);
+	  let block5 = Block.new(170, 50, 30);
+	  let block6 = Block.new(205, 50, 30);
+	  let block7 = Block.new(240, 50, 30);
+	  let block8 = Block.new(275, 50, 30);
+	  let block9 = Block.new(310, 50, 30);
+	  let block10 = Block.new(345, 50, 30);
+	  let block11 = Block.new(380, 50, 30);
+	  let block12 = Block.new(415, 50, 30);
+	  let block13 = Block.new(450, 50, 30);
+      let direction = 0;  // initial state is no movement
+	  let fired = false;
+      return this;
+   }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do square.dispose();
+      do Memory.deAlloc(this);
+      return;
+   }
+
+
+   
+
+   /** Runs the game: handles the user's inputs and moves the square accordingly */
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+      let exit = false;
+      
+      while (~exit) {
+         // waits for a key to be pressed
+         while (key = 0) {
+            let key = Keyboard.keyPressed();
+            do moveBullet();
+         }
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 130) { do square.moveLeft(); }   // left arrow
+         if (key = 132) { do square.moveRight(); }   // right arrow
+         if (key = 32)  { 
+		 let bullet = Bullet.new(square.xPos() + (square.sSize()/2), square.yPos()-6,4);
+			let fired = true;
+			}
+         // waits for the key to be released
+         while (~(key = 0)) {
+            let key = Keyboard.keyPressed();
+            do moveBullet();
+         }
+     } // while
+     return;
+   }   
+   
+   /** Moves the square in the current direction. */
+   method void moveBullet() {
+	  if(fired){do bullet.moveUp();}
+	  let currentY = bullet.yPos();
+	  let currentX = bullet.xPos();
+	  if((currentY < bp) & (currentX = 45)){do block.erase();}
+	  if((currentY < bp) & (currentX = 80)){do block2.erase();}
+	  if((currentY < bp) & (currentX = 115)){do block3.erase();}
+	  if((currentY < bp) & (currentX = 150)){do block4.erase();}
+	  if((currentY < bp) & (currentX = 185)){do block5.erase();}
+	  if((currentY < bp) & (currentX = 220)){do block6.erase();}
+	  if((currentY < bp) & (currentX = 255)){do block7.erase();}
+	  if((currentY < bp) & (currentX = 290)){do block8.erase();}
+	  if((currentY < bp) & (currentX = 325)){do block9.erase();}
+	  if((currentY < bp) & (currentX = 360)){do block10.erase();}
+	  if((currentY < bp) & (currentX = 395)){do block11.erase();}
+	  if((currentY < bp) & (currentX = 430)){do block12.erase();}
+	  if((currentY < bp) & (currentX = 465)){do block13.erase();}
+      return;
+   }
+}
+
+
+
